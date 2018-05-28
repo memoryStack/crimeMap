@@ -10,7 +10,7 @@ class DBHelper:
 							db=datbase)
 
 	def get_all_inputs(self):
-	connection = self.connect()
+		connection = self.connect()
 		try:
 			query = "SELECT description FROM crimes;"
 			with connection.cursor() as cursor:
@@ -22,15 +22,15 @@ class DBHelper:
 	def add_input(self, data):
 		connection = self.connect()
 		try:
-			query = "INSERT INTO crimes (description) VALUES ('{}');".format(data) #i didn't understand this '.format(data)'
+			query = "INSERT INTO crimes (description) VALUES (%s);"
 			with connection.cursor() as cursor:
-				cursor.execute(query)
+				cursor.execute(query, data)
 				connection.commit()
 		finally:
 			connection.close()
 
 	def clear_all(self):
-		connection.connect(self):
+		connection = self.connect()
 		try:
 			query = "DELETE FROM crimes;"
 			with connection.cursor() as cursor:
